@@ -23,6 +23,31 @@
   border: none;
 }
 
+.form2{
+  height: 550px;
+  width: 380px;
+  background-color: rgba(146, 34, 86, 0.152);
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(154, 22, 64, 0.103);
+  box-shadow: 10px 10px 19px 1px rgba(46, 0, 16, 0.47);
+  padding-top: 25px;
+  padding-left: 20px;
+  padding-right: 30px;
+  padding-bottom: 25px;
+}
+
+.form2 *{
+  font-family: 'Dosis', sans-serif;
+  letter-spacing: 0.9px;
+  outline: none;
+  border: none;
+}
+
 .h3{
   font-family: 'Playfair Display', serif;  
   color: #340017a3;
@@ -58,7 +83,7 @@
   background-color: #ffdbbc00;
   color: #340017a3;
   padding: 15px 0;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 900;
   border: #5400267e solid 2px;
   border-radius: 10px;
