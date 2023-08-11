@@ -37,7 +37,11 @@ app.get('/', async function(req, res){
 })
 
 app.post('/logar', (req, res) => {
-  res.send("você está logado!")
+  if (req.body.usuario == "any" && req.body.senha == 9804) {
+    res.send("você está logado!")
+  } else {
+    res.send("cade o cadastro?")
+  }
 })
 
 app.post('/deslogar', function(req, res) {
