@@ -33,15 +33,6 @@ app.get('/usuarios/cadastrar', async function(req, res){
   
 })
 
-app.post('/usuarios/cadastrar', async function(req, res){
-  if(req.body.senha === req.body.confirmar)
-  res.json({mensagem: "Cadastro realizado!"})
-else(
-  res.json({mensagem: "Senhas não são iguais!"})
- )
-
-})
-
 app.get('/autenticar', async function(req, res){
   res.render('autenticar');
 })
@@ -55,7 +46,7 @@ app.post('/logar', (req, res) => {
     const id = 1;
 
     const token = jwt.sign({ id }, process.env.SECRET, {
-      expiresIn: 300
+      expiresIn: 3000
     })
 
     res.cookie('token', token, {httpOnly: true});
@@ -73,11 +64,7 @@ app.post('/deslogar', function(req, res) {
   res.json({
     deslogado:true
   })
-
-
 })
-
-
 
 app.post('/usuarios/cadastrar', async function(req, res){
   try {
@@ -91,8 +78,14 @@ app.post('/usuarios/cadastrar', async function(req, res){
 })
 
 app.get('/usuarios/listar', async function(req, res){
-  res.json('usuarios')
-})
+  try {
+   var usuarios = await usuario.findAll();
+   res.render('home', { usuarios });
+ } catch (err) {
+   console.error(err);
+   res.status(500).json({ message: 'Ocorreu um erro ao buscar os usuário.' });
+ }
+ })
 
 app.listen(3000, function() {
   console.log('App de Exemplo escutando na porta 3000!')
