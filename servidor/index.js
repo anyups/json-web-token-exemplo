@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 var { expressjwt: expressJWT } = require("express-jwt");
 const cors = require('cors');
 
+const crypto = require('../crypto');
+
 var cookieParser = require('cookie-parser')
 
 const express = require('express');
@@ -68,9 +70,15 @@ app.post('/deslogar', function(req, res) {
 
 app.post('/usuarios/cadastrar', async function(req, res){
   try {
-    if(req.body.senha === req.body.confirmar)
-      await usuario.create(req.body);
+    const banco = {
+      nome: req.body.nome,
+      senha: crypto.encrypt(req.body.senha)
+    }
+    if(req.body.senha === req.body.confirmar){
+      const senhacrypto = await usuario.create(banco);
       res.redirect('/usuarios/listar')
+    }
+      
   } catch (err) {
       console.error(err);
       res.status(500).json({ message: 'Ocorreu um erro ao criar o usuário.' });
@@ -79,8 +87,8 @@ app.post('/usuarios/cadastrar', async function(req, res){
 
 app.get('/usuarios/listar', async function(req, res){
   try {
-   var usuarios = await usuario.findAll();
-   res.render('home', { usuarios });
+   var senhacrypto = await usuario.findAll();
+   res.render('home', { senhacrypto });
  } catch (err) {
    console.error(err);
    res.status(500).json({ message: 'Ocorreu um erro ao buscar os usuário.' });
@@ -90,3 +98,4 @@ app.get('/usuarios/listar', async function(req, res){
 app.listen(3000, function() {
   console.log('App de Exemplo escutando na porta 3000!')
 });
+
