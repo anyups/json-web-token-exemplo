@@ -3,8 +3,7 @@ require("dotenv-safe").config();
 const jwt = require('jsonwebtoken');
 var { expressjwt: expressJWT } = require("express-jwt");
 const cors = require('cors');
-
-const crypto = require('../crypto');
+const crypto = require('./crypto');
 
 var cookieParser = require('cookie-parser')
 
@@ -98,4 +97,3 @@ app.get('/usuarios/listar', async function(req, res){
 app.listen(3000, function() {
   console.log('App de Exemplo escutando na porta 3000!')
 });
-
