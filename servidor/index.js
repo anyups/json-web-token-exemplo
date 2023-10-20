@@ -43,22 +43,34 @@ app.get('/', async function(req, res){
 })
 
 app.post('/logar', (req, res) => {
-  if(req.body.usuario == "any" && req.body.senha == "123"){
-    const id = 1;
+  try {
+    const cadastro = {
+      nome: req.body.nome,
+      senha: req.body.senha
+    } 
+    const usuario = await usuario.findOne({ where: { id: req.query.id } });
 
-    const token = jwt.sign({ id }, process.env.SECRET, {
-      expiresIn: 3000
-    })
+    if(usuario && crypto.decrypt(usuario.senha) === senha){
+      const id = 1;
+  
+      const token = jwt.sign({ id }, process.env.SECRET, {
+        expiresIn: 3000
+      })
+  
+      res.cookie('token', token, {httpOnly: true});
+      return res.json({
+        usuario: req.body.usuario,
+        token: token
+      })
+    } 
 
-    res.cookie('token', token, {httpOnly: true});
-    return res.json({
-      usuario: req.body.usuario,
-      token: token
-    })
-  } 
+  } catch (error) {
+    console.error(err);
+    res.status(500).json({ message: 'Login inválido.' });
+  }
 
-  res.status(500).json({ mensagem: "Login Inválido "})
 })
+
 
 app.post('/deslogar', function(req, res) {
   res.cookie('token', null, {httpOnly: true});

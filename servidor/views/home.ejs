@@ -9,7 +9,7 @@
 </head>
 <body>
   <% senhacrypto.forEach((usuario) => { %>
-    <%= usuario.nome %> <%= usuario.senha %>
+    <h2><%= usuario.nome %></h2> <p><b>crypto:</b> <%= usuario.senha %></p>
 <% }) %>
   <form action="/deslogar" method="post">
     <input type="submit" value="Deslogar">
