@@ -5,14 +5,25 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="/servidor/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/css/style.css">
   <title>Usuários cadastrados</title>
 </head>
 <body>
-  <% senhacrypto.forEach((usuario) => { %>
-    <h2><%= usuario.nome %></h2> <p><b>crypto:</b> <%= usuario.senha %></p>
-<% }) %>
+  <div>
+  <div class="listar">
+    <div class="h3">Usuários cadastrados</div>
+
+    <% senhacrypto.forEach((usuario) => { %>
+    <div class="nome"><%= usuario.nome %></div> 
+    <div class="crypto">crypto:</div> 
+    <div class="senha"><%= usuario.senha %></div>
+    <% }) %>
+
   <form action="/deslogar" method="post">
-    <input type="submit" value="Deslogar">
+    <input class="deslogar" type="submit" value="Deslogar">
   </form>
+
+  </div>
+  </div>
 </body>
 </html>

@@ -42,34 +42,27 @@ app.get('/', async function(req, res){
   res.render("home")
 })
 
-app.post('/logar', (req, res) => {
+app.post('/logar', async function(req, res) {
   try {
-    const cadastro = {
-      nome: req.body.nome,
-      senha: req.body.senha
-    } 
-    const usuario = await usuario.findOne({ where: { id: req.query.id } });
+    const { usuario: username, senha } = req.body;
+    const user = await usuario.findOne({ where: { nome: username } });
 
-    if(usuario && crypto.decrypt(usuario.senha) === senha){
-      const id = 1;
-  
-      const token = jwt.sign({ id }, process.env.SECRET, {
+    if (user && crypto.decrypt(user.senha) === senha) {
+      const token = jwt.sign({ id: user.id }, process.env.SECRET, {
         expiresIn: 3000
-      })
-  
-      res.cookie('token', token, {httpOnly: true});
+      });
+
+      res.cookie('token', token, { httpOnly: true });
       return res.json({
-        usuario: req.body.usuario,
+        usuario: user.nome,
         token: token
-      })
-    } 
-
-  } catch (error) {
+      });
+    }
+  } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Login inválido.' });
+    res.status(500).json({ message: "Erro ao realizar login." });
   }
-
-})
+});
 
 
 app.post('/deslogar', function(req, res) {
