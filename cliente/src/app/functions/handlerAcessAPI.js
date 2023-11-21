@@ -41,4 +41,22 @@ const postUser = async (user) => {
     }
 }
 
-export { getUsers, getUserAuthenticated, postUser };
+const updateUser = async (user, id) => {
+    const token = cookies().get('token')?.value;
+    try{
+        const responseOfApi = await fetch(`${url}/user/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'Application/json',
+                Cookie: `token=${token}`
+            },
+            body: JSON.stringify(user)
+        });
+        const userSave = await responseOfApi.json();
+        return userSave;
+    } catch {
+        return null;
+    }
+}
+
+export { getUsers, getUserAuthenticated, postUser, updateUser };
