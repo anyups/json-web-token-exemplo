@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 var { expressjwt: expressJWT } = require("express-jwt");
 const cors = require('cors');/*liberações do servidor, abre portas para permitir a comunicação entre cliente e servidor*/
 const corsOpcoes = {
-  origin: "http://localhost:3000", /*cliente que fará o acesso*/
+  origin: "http://localhost:4000", /*cliente que fará o acesso*/
   methods: "GET, PUT, POST, DELETE", /*métodos que o cliente pode executar*/
   allowedHeaders: "Content-Type, Authorization", /*autoriza todo tipo de conteúdo*/
   credentials: true
@@ -53,17 +53,17 @@ app.get('/', async function(req, res){
 
 app.post('/logar', async function(req, res) {
   try {
-    const { usuario: name, senha } = req.body;
-    const cadastro = await usuario.findOne({ where: { nome: name } });
+    const { usuario: name, password } = req.body;
+    const cadastro = await usuario.findOne({ where: { name: name } });
 
-    if (cadastro && crypto.decrypt(cadastro.senha) === senha) {
+    if (cadastro && crypto.decrypt(cadastro.password) === password) {
       const id = 1;
       const token = jwt.sign({ id }, process.env.SECRET, {
         expiresIn: 3000
       });
 
       res.cookie('token', token, { httpOnly: true }).json({
-        nome: cadastro.nome,
+        name: cadastro.name,
         token: token
       });
       /*return res.json({
@@ -88,10 +88,10 @@ app.post('/usuarios/cadastrar', async function(req, res){
   try {
     const banco = {
       nome: req.body.nome,
-      senha: crypto.encrypt(req.body.senha)
+      password: crypto.encrypt(req.body.password)
     }
-    if(req.body.senha === req.body.confirmar){
-      const senhacrypto = await usuario.create(banco);
+    if(req.body.password === req.body.confirmar){
+      const passwordcrypto = await usuario.create(banco);
       res.redirect('/usuarios/listar')
     }
       
@@ -103,14 +103,14 @@ app.post('/usuarios/cadastrar', async function(req, res){
 
 app.get('/usuarios/listar', async function(req, res){
   try {
-   var senhacrypto = await usuario.findAll();
-   res.json(senhacrypto);
+   var passwordcrypto = await usuario.findAll();
+   res.json(passwordcrypto);
  } catch (err) {
    console.error(err);
    res.status(500).json({ message: 'Ocorreu um erro ao buscar os usuário.' });
  }
  })
 
-app.listen(3000, function() {
-  console.log('App de Exemplo escutando na porta 3000!')
+app.listen(4000, function() {
+  console.log('App de Exemplo escutando na porta 4000!')
 });

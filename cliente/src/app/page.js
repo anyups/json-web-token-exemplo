@@ -9,7 +9,7 @@ import styles from './styles.module.css';
 
 export default function Login() {
   const [user, setUser] = useState({
-    email: '',
+    name: '',
     password: '',
   });
   const { push, refresh } = useRouter();
@@ -19,7 +19,7 @@ export default function Login() {
     try {
       const userAuth = await handlerAcessUser(user);
       if(userAuth.token === undefined){
-        toast.error("erro no e-mail ou senha!");
+        toast.error("erro no nome ou senha!");
       }
       push('/pages/dashboard');
     } catch {
@@ -34,7 +34,7 @@ export default function Login() {
       <h1 className={styles.h1}>login</h1>
 			<form className={styles.login} onSubmit={handlerLogin}>
 				<div className={styles.cardInput}>
-					<input type="email" className={styles.input} placeholder="Email" onChange={(e) => { setUser({ ...user, email: e.target.value }) }}/>
+					<input type="text" className={styles.input} placeholder="Name" onChange={(e) => { setUser({ ...user, name: e.target.value }) }}/>
 				</div>
 				<div className={styles.cardInput}>
 					<input type="password" className={styles.input} placeholder="Password" onChange={(e) => { setUser({ ...user, password: e.target.value }) }}/>
