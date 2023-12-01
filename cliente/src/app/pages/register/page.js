@@ -8,15 +8,15 @@ import { postUser } from "@/app/functions/handlerAcessAPI";
 import { useRouter } from "next/navigation";
 import handlerAcessUser from "@/app/functions/handlerAcess";
 
-export default async function Login() {
+export default function Login() {
   const [user, setUser] = useState({
-    name: '',
-    email: '',
-    password: '',
+    nome: '',
+    senha: '',
+    confirmar: ''
   });
   const { push } = useRouter();
 
-  const handlerFormSubmit = async (event) => {
+  const handlerLogin = async (event) => {
     event.preventDefault();
     try {
       await postUser(user);
@@ -48,13 +48,13 @@ export default async function Login() {
       <h1 className={styles.h1}>cadastro</h1>
 			<form className={styles.content} onSubmit={handlerLogin}>
                 <div className={styles.cardInput}>
-					<input type="text" className={styles.input} placeholder="Username" value={user.name} onChange={(e) => {setUser({ ...user, name: e.target.value});}}/>
+					<input type="text" className={styles.input} placeholder="Username" name="nome" value={user.nome} onChange={(e) => {setUser({ ...user, nome: e.target.value});}}/>
 				</div>
 				<div className={styles.cardInput}>
-					<input type="email" className={styles.input} placeholder="Email" value={user.email} onChange={(e) => {setUser({ ...user, email: e.target.value});}}/>
+					<input type="password" className={styles.input} placeholder="Password" name="senha" value={user.senha} onChange={(e) => {setUser({ ...user, senha: e.target.value});}}/>
 				</div>
-				<div className={styles.cardInput}>
-					<input type="password" className={styles.input} placeholder="Password" value={user.password} onChange={(e) => {setUser({ ...user, password: e.target.value});}}/>
+        <div className={styles.cardInput}>
+					<input type="password" className={styles.input} placeholder="Password" name="confirmar" value={user.confirmar} onChange={(e) => {setUser({ ...user, confirmar: e.target.value});}}/>
 				</div>
 				<button className={styles.botao}>
 					<span>Cadastrar</span>

@@ -1,7 +1,10 @@
 'use server'
 
+import { cookies } from "next/dist/client/components/headers";
+
 const url = "http://localhost:4000";
 const getUserAuthenticated = async (user) => {
+    console.log(user);
     const responseOfApi =  await fetch(url + "/logar", 
         {
          method: "POST",
@@ -15,9 +18,13 @@ const getUserAuthenticated = async (user) => {
 }
 
 const getUsers = async () =>{
+    const token = cookies().get("token")?.value
     try{
         const responseOfApi = await fetch(url + "/usuarios/listar",{
-            next: { revalidate: 5}
+            next: { revalidate: 5},
+            headers: {'Content-type': 'Application/json',
+            Cookie: `token=${token}`,
+        },
         });
         const listUsers = responseOfApi.json();
 
@@ -28,10 +35,14 @@ const getUsers = async () =>{
 }
 
 const postUser = async (user) => {
+    const token = cookies().get("token")?.value
     try {
-        const responseOfApi = await fetch(url + "/user", {
+        console.log(user)
+        const responseOfApi = await fetch(url + "/usuarios/cadastrar", {
             method: 'POST',
-            headers: { 'Content-Type': 'Aplication/json' },
+            headers: { 'Content-Type': 'Aplication/json', 
+            Cookie: `token=${token}`,
+        },
             body: JSON.stringify(user)
         });
         const userSave = await responseOfApi.json();

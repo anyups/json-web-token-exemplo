@@ -10,7 +10,7 @@ import styles from './styles.module.css';
 export default function Login() {
   const [user, setUser] = useState({
     name: '',
-    password: '',
+    senha: '',
   });
   const { push, refresh } = useRouter();
 
@@ -37,7 +37,7 @@ export default function Login() {
 					<input type="text" className={styles.input} placeholder="Name" onChange={(e) => { setUser({ ...user, name: e.target.value }) }}/>
 				</div>
 				<div className={styles.cardInput}>
-					<input type="password" className={styles.input} placeholder="Password" onChange={(e) => { setUser({ ...user, password: e.target.value }) }}/>
+					<input type="password" className={styles.input} placeholder="Password" onChange={(e) => { setUser({ ...user, senha: e.target.value }) }}/>
 				</div>
 				<button className={styles.botao}>
 					<span>Log In</span>

@@ -36,9 +36,6 @@ export default function Login() {
 					<input type="text" className={styles.input} placeholder="Username"/>
 				</div>
 				<div className={styles.cardInput}>
-					<input type="email" className={styles.input} placeholder="Email"/>
-				</div>
-				<div className={styles.cardInput}>
 					<input type="password" className={styles.input} placeholder="Password"/>
 				</div>
 				<button className={styles.botaoalter}>
