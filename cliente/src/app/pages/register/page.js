@@ -6,9 +6,8 @@ import styles from '../main.module.css';
 import { Suspense, useState } from "react";
 import { postUser } from "@/app/functions/handlerAcessAPI";
 import { useRouter } from "next/navigation";
-import handlerAcessUser from "@/app/functions/handlerAcess";
 
-export default function Login() {
+export default function Register() {
   const [user, setUser] = useState({
     nome: '',
     senha: '',
@@ -16,7 +15,7 @@ export default function Login() {
   });
   const { push } = useRouter();
 
-  const handlerLogin = async (event) => {
+  const handlerRegister = async (event) => {
     event.preventDefault();
     try {
       await postUser(user);
@@ -44,9 +43,9 @@ export default function Login() {
     <div className={styles.body}>
     <div className={styles.container}>
 	<div className={styles.screen}>
-		<div className={styles.form} onSubmit={handlerAcessUser}>
+		<div className={styles.form}>
       <h1 className={styles.h1}>cadastro</h1>
-			<form className={styles.content} onSubmit={handlerLogin}>
+			<form className={styles.content} onSubmit={handlerRegister}>
                 <div className={styles.cardInput}>
 					<input type="text" className={styles.input} placeholder="Username" name="nome" value={user.nome} onChange={(e) => {setUser({ ...user, nome: e.target.value});}}/>
 				</div>

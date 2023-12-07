@@ -39,8 +39,7 @@ app.use(
 );
 
 app.get('/usuarios/cadastrar', async function(req, res){
-  res.render('usuarios/cadastrar');
-  
+  res.render('usuarios/cadastrar')
 })
 
 app.get('/autenticar', async function(req, res){
@@ -91,11 +90,10 @@ app.post('/usuarios/cadastrar', async function(req, res){
       nome: req.body.nome,
       senha: crypto.encrypt(req.body.senha)
     }
-    if(req.body.senha === req.body.confirmar){
+    if(req.body.senha == req.body.confirmar){
       const passwordcrypto = await usuario.create(banco);
       res.redirect('/usuarios/listar')
     }
-      
   } catch (err) {
       console.error(err);
       res.status(500).json({ message: 'Ocorreu um erro ao criar o usuário.' });

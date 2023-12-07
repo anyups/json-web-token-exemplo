@@ -36,18 +36,19 @@ const getUsers = async () =>{
 
 const postUser = async (user) => {
     const token = cookies().get("token")?.value
-    try {
+    try{
         console.log(user)
         const responseOfApi = await fetch(url + "/usuarios/cadastrar", {
             method: 'POST',
-            headers: { 'Content-Type': 'Aplication/json', 
+            headers: { 'Content-type': 'Application/json',
             Cookie: `token=${token}`,
-        },
-            body: JSON.stringify(user)
+         },
+           body: JSON.stringify(user) 
         });
         const userSave = await responseOfApi.json();
         return userSave;
-    } catch {
+    }
+    catch {
         return null;
     }
 }
